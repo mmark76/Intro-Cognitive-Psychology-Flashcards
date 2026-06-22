@@ -10,7 +10,7 @@
 - [x] Permanent CI workflow added.
 - [x] GitHub Pages workflow added.
 - [x] Repository base path configured.
-- [ ] Pull Request CI succeeds.
+- [x] Pull Request CI succeeds.
 - [ ] Pull Request reviewed and merged.
 - [ ] GitHub Pages source confirmed as GitHub Actions.
 - [ ] Production URL smoke-tested.
