@@ -17,6 +17,9 @@ export function FlashcardSession({ cards, mode, onComplete }: FlashcardSessionPr
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState("");
+  const ratingLock = useRef(false);
   const persistedRatings = useRef(new Set<string>());
   const requeued = useRef(new Set<string>());
   const startedAt = useRef(new Date().toISOString());
@@ -25,43 +28,53 @@ export function FlashcardSession({ cards, mode, onComplete }: FlashcardSessionPr
   const current = cardById.get(queue[index]);
 
   async function rate(score: Rating) {
-    if (!current) return;
+    if (!current || ratingLock.current) return;
+    ratingLock.current = true;
+    setIsSaving(true);
+    setError("");
 
-    const decision = getSessionRatingDecision(
-      score,
-      persistedRatings.current.has(current.id),
-      requeued.current.has(current.id),
-    );
+    try {
+      const decision = getSessionRatingDecision(
+        score,
+        persistedRatings.current.has(current.id),
+        requeued.current.has(current.id),
+      );
 
-    if (decision.persistProgress) {
-      const existing = await studyDatabase.cardProgress.get(current.id);
-      await studyDatabase.cardProgress.put(calculateNextProgress(current.id, existing, score));
-      persistedRatings.current.add(current.id);
+      if (decision.persistProgress) {
+        const existing = await studyDatabase.cardProgress.get(current.id);
+        await studyDatabase.cardProgress.put(calculateNextProgress(current.id, existing, score));
+        persistedRatings.current.add(current.id);
+      }
+
+      const isFirstPassCorrect = decision.persistProgress && score === 2;
+      if (isFirstPassCorrect) setCorrectAnswers((value) => value + 1);
+
+      if (decision.requeueCard) {
+        requeued.current.add(current.id);
+        setQueue((items) => [...items, current.id]);
+      }
+
+      const nextIndex = index + 1;
+      if (nextIndex >= queue.length + (decision.requeueCard ? 1 : 0)) {
+        await studyDatabase.studySessions.put({
+          id: createId("session"),
+          mode,
+          startedAt: startedAt.current,
+          completedAt: new Date().toISOString(),
+          reviewedCards: nextIndex,
+          correctAnswers: correctAnswers + (isFirstPassCorrect ? 1 : 0),
+        });
+        onComplete?.();
+      }
+
+      setIndex(nextIndex);
+      setRevealed(false);
+    } catch {
+      setError("Η αποθήκευση της προόδου απέτυχε. Δοκιμάστε ξανά.");
+    } finally {
+      ratingLock.current = false;
+      setIsSaving(false);
     }
-
-    const isFirstPassCorrect = decision.persistProgress && score === 2;
-    if (isFirstPassCorrect) setCorrectAnswers((value) => value + 1);
-
-    if (decision.requeueCard) {
-      requeued.current.add(current.id);
-      setQueue((items) => [...items, current.id]);
-    }
-
-    const nextIndex = index + 1;
-    if (nextIndex >= queue.length + (decision.requeueCard ? 1 : 0)) {
-      await studyDatabase.studySessions.put({
-        id: createId("session"),
-        mode,
-        startedAt: startedAt.current,
-        completedAt: new Date().toISOString(),
-        reviewedCards: nextIndex,
-        correctAnswers: correctAnswers + (isFirstPassCorrect ? 1 : 0),
-      });
-      onComplete?.();
-    }
-
-    setIndex(nextIndex);
-    setRevealed(false);
   }
 
   if (!current) {
@@ -92,11 +105,12 @@ export function FlashcardSession({ cards, mode, onComplete }: FlashcardSessionPr
       </article>
       {revealed && (
         <div className="rating-grid" aria-label="Αυτοβαθμολόγηση">
-          <button onClick={() => void rate(0)}><strong>0</strong><span>Δεν θυμάμαι</span></button>
-          <button onClick={() => void rate(1)}><strong>1</strong><span>Μερική απάντηση</span></button>
-          <button onClick={() => void rate(2)}><strong>2</strong><span>Πλήρης απάντηση</span></button>
+          <button disabled={isSaving} onClick={() => void rate(0)}><strong>0</strong><span>Δεν θυμάμαι</span></button>
+          <button disabled={isSaving} onClick={() => void rate(1)}><strong>1</strong><span>Μερική απάντηση</span></button>
+          <button disabled={isSaving} onClick={() => void rate(2)}><strong>2</strong><span>Πλήρης απάντηση</span></button>
         </div>
       )}
+      {error && <p className="inline-message" role="alert">{error}</p>}
     </section>
   );
 }

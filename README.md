@@ -1,6 +1,6 @@
 # Intro Cognitive Psychology Study App
 
-Local-first web application / PWA for studying the two repository PDFs more effectively.
+Local-first web application / PWA for studying cognitive psychology chapters and flashcards.
 
 ## Current MVP
 
@@ -10,7 +10,7 @@ Local-first web application / PWA for studying the two repository PDFs more effe
 - Due-review queue.
 - Ten-question quizzes.
 - Local progress dashboard.
-- JSON backup and restore.
+- Validated JSON backup and restore.
 - Offline-ready PWA, without accounts or backend.
 
 ## Technology
@@ -20,7 +20,7 @@ React, TypeScript, Vite, `vite-plugin-pwa`, Dexie and IndexedDB.
 ## Development
 
 ```bash
-npm install
+npm ci
 npm run dev
 npm run typecheck
 npm test
@@ -29,7 +29,17 @@ npm run build
 
 ## Data and privacy
 
-The educational content is derived from the two PDFs stored in this repository. Study progress remains in the browser's IndexedDB unless the user exports a backup file.
+Study progress remains in the browser's IndexedDB unless the user exports a backup file. Imported backups are validated before any local data is replaced.
+
+## Deployment
+
+The production build is configured for GitHub Pages at:
+
+```text
+https://mmark76.github.io/Intro-Cognitive-Psychology-Flashcards/
+```
+
+Deployment occurs from `main` through the GitHub Pages workflow after verification succeeds.
 
 ## Project rules
 
