@@ -5,7 +5,7 @@ on:
     branches:
       - fix2-automation
     paths:
-      - fix2.patch.gz.b64
+      - fix2.chunk-*
 
 permissions:
   contents: write
@@ -21,7 +21,7 @@ jobs:
 
       - name: Reconstruct reviewed patch
         run: |
-          base64 --decode fix2.patch.gz.b64 | gzip --decompress > /tmp/fix2.patch
+          cat fix2.chunk-* | base64 --decode | gzip --decompress > /tmp/fix2.patch
 
       - name: Apply patch to feature branch
         run: |
