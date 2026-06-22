@@ -9,11 +9,13 @@ const VALID_CARD_IDS = new Set(flashcards.map((card) => card.id));
 
 export function ImportExportPanel() {
   const inputRef = useRef<HTMLInputElement>(null);
+  const busyLock = useRef(false);
   const [message, setMessage] = useState("");
   const [isBusy, setIsBusy] = useState(false);
 
   async function exportBackup() {
-    if (isBusy) return;
+    if (busyLock.current) return;
+    busyLock.current = true;
     setIsBusy(true);
     setMessage("");
 
@@ -37,12 +39,14 @@ export function ImportExportPanel() {
     } catch {
       setMessage("Η δημιουργία του αντιγράφου ασφαλείας απέτυχε.");
     } finally {
+      busyLock.current = false;
       setIsBusy(false);
     }
   }
 
   async function importBackup(file: File) {
-    if (isBusy) return;
+    if (busyLock.current) return;
+    busyLock.current = true;
     setIsBusy(true);
     setMessage("");
 
@@ -63,6 +67,7 @@ export function ImportExportPanel() {
     } catch {
       setMessage("Το αρχείο δεν είναι έγκυρο αντίγραφο της εφαρμογής.");
     } finally {
+      busyLock.current = false;
       setIsBusy(false);
     }
   }
