@@ -3,6 +3,7 @@ import { studyDatabase } from "../../infrastructure/database/studyDatabase";
 import type { Flashcard, Rating, StudyMode } from "../../shared/types/models";
 import { createId } from "../../shared/utils/id";
 import { calculateNextProgress } from "../review/spacedRepetition";
+import { getSessionRatingDecision } from "./sessionRatingPolicy";
 
 interface FlashcardSessionProps {
   cards: Flashcard[];
@@ -16,6 +17,7 @@ export function FlashcardSession({ cards, mode, onComplete }: FlashcardSessionPr
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(0);
+  const persistedRatings = useRef(new Set<string>());
   const requeued = useRef(new Set<string>());
   const startedAt = useRef(new Date().toISOString());
 
@@ -24,25 +26,36 @@ export function FlashcardSession({ cards, mode, onComplete }: FlashcardSessionPr
 
   async function rate(score: Rating) {
     if (!current) return;
-    const existing = await studyDatabase.cardProgress.get(current.id);
-    await studyDatabase.cardProgress.put(calculateNextProgress(current.id, existing, score));
 
-    if (score === 2) setCorrectAnswers((value) => value + 1);
-    const shouldRequeue = score === 0 && !requeued.current.has(current.id);
-    if (shouldRequeue) {
+    const decision = getSessionRatingDecision(
+      score,
+      persistedRatings.current.has(current.id),
+      requeued.current.has(current.id),
+    );
+
+    if (decision.persistProgress) {
+      const existing = await studyDatabase.cardProgress.get(current.id);
+      await studyDatabase.cardProgress.put(calculateNextProgress(current.id, existing, score));
+      persistedRatings.current.add(current.id);
+    }
+
+    const isFirstPassCorrect = decision.persistProgress && score === 2;
+    if (isFirstPassCorrect) setCorrectAnswers((value) => value + 1);
+
+    if (decision.requeueCard) {
       requeued.current.add(current.id);
       setQueue((items) => [...items, current.id]);
     }
 
     const nextIndex = index + 1;
-    if (nextIndex >= queue.length + (shouldRequeue ? 1 : 0)) {
+    if (nextIndex >= queue.length + (decision.requeueCard ? 1 : 0)) {
       await studyDatabase.studySessions.put({
         id: createId("session"),
         mode,
         startedAt: startedAt.current,
         completedAt: new Date().toISOString(),
         reviewedCards: nextIndex,
-        correctAnswers: correctAnswers + (score === 2 ? 1 : 0),
+        correctAnswers: correctAnswers + (isFirstPassCorrect ? 1 : 0),
       });
       onComplete?.();
     }
