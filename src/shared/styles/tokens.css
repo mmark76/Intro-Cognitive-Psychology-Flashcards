@@ -1,0 +1,21 @@
+:root {
+  color-scheme: light;
+  --navy-950: #172554;
+  --navy-800: #1e3a8a;
+  --blue-600: #2563eb;
+  --blue-100: #dbeafe;
+  --slate-950: #0f172a;
+  --slate-700: #334155;
+  --slate-500: #64748b;
+  --slate-300: #cbd5e1;
+  --slate-100: #f1f5f9;
+  --surface: #ffffff;
+  --background: #f8fafc;
+  --success: #166534;
+  --danger: #b91c1c;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.85rem;
+  --radius-lg: 1.25rem;
+  --shadow: 0 12px 32px rgb(15 23 42 / 0.08);
+  --content-width: 1120px;
+}

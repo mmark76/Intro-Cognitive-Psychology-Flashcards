@@ -1,0 +1,60 @@
+import type { Flashcard } from "../../shared/types/models";
+
+export const part08: Flashcard[] = [
+  {
+    id: "card-094",
+    chapterId: "chapter-15",
+    number: 94,
+    question: "Ποια είναι η διαφορά metacognitive monitoring και metacognitive control;",
+    answer: "Metacognitive monitoring είναι η εκτίμηση του τι γνωρίζουμε, πόσο καλά αποδώσαμε και πόσο πιθανή είναι η ανάκληση. Metacognitive control είναι η χρήση αυτών των εκτιμήσεων για επιλογή στρατηγικής, κατανομή χρόνου, επανάληψη, αναζήτηση feedback ή αλλαγή στόχου.",
+    tags: ["Μεταγνώση, μάθηση και καθημερινή εφαρμογή"],
+  },
+  {
+    id: "card-095",
+    chapterId: "chapter-15",
+    number: 95,
+    question: "Πώς fluency και familiarity δημιουργούν illusion of competence;",
+    answer: "Fluency είναι η υποκειμενική ευκολία επεξεργασίας και familiarity η αίσθηση οικειότητας. Επειδή συχνά εκλαμβάνονται ως απόδειξη γνώσης, η επανάγνωση μπορεί να δημιουργήσει illusion of competence, παρότι η πληροφορία δεν ανακαλείται χωρίς το κείμενο ή δεν εφαρμόζεται σε νέο πρόβλημα.",
+    tags: ["Μεταγνώση, μάθηση και καθημερινή εφαρμογή"],
+  },
+  {
+    id: "card-096",
+    chapterId: "chapter-15",
+    number: 96,
+    question: "Να σχεδιάσετε έναν κύκλο μελέτης που συνδυάζει retrieval practice, feedback, spacing και transfer.",
+    answer: "Ένας αποτελεσματικός κύκλος είναι: αρχική κατανόηση, κλειστό βιβλίο και retrieval practice, άμεσο feedback και διόρθωση, νέα ανάκληση μετά από αυξανόμενα spaced intervals και τέλος εφαρμογή σε διαφορετικά παραδείγματα ή transfer questions. Τα λάθη καταγράφονται και επανελέγχονται.",
+    tags: ["Μεταγνώση, μάθηση και καθημερινή εφαρμογή"],
+  },
+  {
+    id: "card-097",
+    chapterId: "chapter-15",
+    number: 97,
+    question: "Πώς μπορούν mnemonics, external aids και checklists να υποστηρίξουν μνήμη και ασφάλεια χωρίς να αντικαθιστούν την κατανόηση;",
+    answer: "Τα mnemonics δημιουργούν οργανωμένα encoding και retrieval cues. External aids, όπως ημερολόγια, μεταφέρουν prospective memory στο περιβάλλον. Checklists μειώνουν παραλείψεις σε κρίσιμες διαδικασίες. Όλα πρέπει να στηρίζουν, όχι να αντικαθιστούν, εννοιολογική κατανόηση, κρίση και τελική επαλήθευση.",
+    tags: ["Μεταγνώση, μάθηση και καθημερινή εφαρμογή"],
+  },
+  {
+    id: "card-098",
+    chapterId: "chapter-16",
+    number: 98,
+    question: "Να συγκρίνετε symbolic, connectionist, probabilistic και dynamical approaches.",
+    answer: "Symbolic approaches χρησιμοποιούν ρητές αναπαραστάσεις και κανόνες. Connectionist approaches χρησιμοποιούν κατανεμημένα πρότυπα και μάθηση βαρών σε δίκτυα. Probabilistic approaches μοντελοποιούν αβεβαιότητα και Bayesian inference. Dynamical approaches περιγράφουν συνεχή μεταβολή και αλληλεπίδραση μεταβλητών στον χρόνο.",
+    tags: ["Σύγχρονες προσεγγίσεις και ενοποίηση"],
+  },
+  {
+    id: "card-099",
+    chapterId: "chapter-16",
+    number: 99,
+    question: "Τι υποστηρίζουν predictive processing, embodied cognition και extended cognition και ποια επιφύλαξη απαιτείται για καθεμία;",
+    answer: "Predictive processing: ο εγκέφαλος παράγει προβλέψεις και μειώνει prediction error. Embodied cognition: η νόηση εξαρτάται από σώμα, αίσθηση και δράση. Extended cognition: εργαλεία και περιβάλλον μπορούν να αποτελούν λειτουργικά μέρη γνωστικού συστήματος. Κάθε πλαίσιο χρειάζεται σαφείς ορισμούς και ελέγξιμες προβλέψεις, όχι αόριστη καθολική εξήγηση.",
+    tags: ["Σύγχρονες προσεγγίσεις και ενοποίηση"],
+  },
+  {
+    id: "card-100",
+    chapterId: "chapter-16",
+    number: 100,
+    question: "Να περιγράψετε ένα ολοκληρωμένο γνωστικό επεισόδιο που συνδέει αντίληψη, προσοχή, working memory, long-term memory, γλώσσα, απόφαση, μεταγνώση και δράση.",
+    answer: "Παράδειγμα: διαβάζω μια προειδοποίηση ασφάλειας. Η perception αναγνωρίζει λέξεις, η attention επιλέγει το κρίσιμο σημείο, η working memory συνδέει τις προτάσεις και η long-term memory προσφέρει τεχνική γνώση. Η language processing εξάγει νόημα, η decision making ζυγίζει κίνδυνο, η metacognition ελέγχει αν κατάλαβα και η δράση εφαρμόζει το ασφαλές μέτρο. Το αποτέλεσμα τροφοδοτεί νέα μάθηση.",
+    tags: ["Σύγχρονες προσεγγίσεις και ενοποίηση"],
+  },
+];
