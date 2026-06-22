@@ -1,0 +1,58 @@
+name: Apply chapter reader fix
+
+on:
+  push:
+    branches:
+      - fix2-automation
+    paths:
+      - fix2.chunk-*
+
+permissions:
+  contents: write
+
+jobs:
+  apply-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout automation payload
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Reconstruct reviewed patch
+        run: |
+          cat fix2.chunk-* | base64 --decode | gzip --decompress > /tmp/fix2.patch
+
+      - name: Apply patch to feature branch
+        run: |
+          git fetch origin feature/study-app-mvp
+          git checkout -B feature/study-app-mvp origin/feature/study-app-mvp
+          git apply --check /tmp/fix2.patch
+          git apply /tmp/fix2.patch
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --package-lock=false
+
+      - name: Type checking
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Production build
+        run: npm run build
+
+      - name: Commit verified chapter reader
+        run: |
+          rm -rf dist node_modules
+          rm -f tsconfig.app.tsbuildinfo tsconfig.node.tsbuildinfo vite.config.js vite.config.d.ts
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src tests
+          git commit -m "feat: add full chapter reader content"
+          git push origin HEAD:feature/study-app-mvp
