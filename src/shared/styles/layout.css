@@ -3,8 +3,10 @@
 .primary-nav { background: var(--surface); border-bottom: 1px solid var(--slate-300); padding: 0.65rem max(1rem, calc((100vw - var(--content-width)) / 2)); display: flex; gap: 0.4rem; overflow-x: auto; }
 .primary-nav a { text-decoration: none; white-space: nowrap; padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); color: var(--slate-700); }
 .primary-nav a.active { background: var(--blue-100); color: var(--navy-800); font-weight: 700; }
-.page-container { width: min(var(--content-width), calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 4rem; flex: 1; }
-.app-footer { padding: 1.25rem; text-align: center; color: var(--slate-500); border-top: 1px solid var(--slate-300); background: var(--surface); }
+.page-container { width: min(var(--content-width), calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 8.5rem; flex: 1; }
+.app-footer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; padding: 0.85rem max(1rem, calc((100vw - var(--content-width)) / 2)); text-align: center; color: var(--slate-500); border-top: 1px solid var(--slate-300); background: var(--surface); box-shadow: 0 -4px 14px rgb(15 23 42 / 0.08); display: grid; gap: 0.35rem; }
+.app-footer p { margin: 0; }
+.footer-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.35rem 1rem; font-size: 0.85rem; }
 .stack-lg > * + * { margin-top: 1.5rem; }
 .page-heading { max-width: 780px; }
 .hero-panel, .content-panel, .study-panel, .quiz-card, .empty-state { background: var(--surface); border: 1px solid var(--slate-300); border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: clamp(1.25rem, 3vw, 2rem); }
@@ -14,4 +16,4 @@
 .button-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 .centered { text-align: center; }
 .table-scroll { overflow-x: auto; }
-@media (max-width: 640px) { .page-container { width: min(100% - 1rem, var(--content-width)); padding-top: 1rem; } .app-header { align-items: flex-start; } }
+@media (max-width: 640px) { .page-container { width: min(100% - 1rem, var(--content-width)); padding-top: 1rem; padding-bottom: 10rem; } .app-header { align-items: flex-start; } }
