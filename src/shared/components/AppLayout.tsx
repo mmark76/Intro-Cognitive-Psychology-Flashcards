@@ -32,7 +32,13 @@ export function AppLayout() {
         <Outlet />
       </main>
       <footer className="app-footer">
-        Local-first PWA · Τα δεδομένα προόδου παραμένουν στη συσκευή σας.
+        <p>© 2026 Markellos Markides. All rights reserved.</p>
+        <p className="footer-meta" aria-label="Footer information">
+          <span>License</span>
+          <span>Privacy</span>
+          <span>Analytics choices</span>
+          <span>Copyright protected</span>
+        </p>
       </footer>
     </div>
   );
