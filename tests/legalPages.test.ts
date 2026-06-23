@@ -15,12 +15,13 @@ describe("legal footer pages", () => {
     expect(licenceText).toContain("does not make the project open source");
   });
 
-  it("documents tracking-parameter cleanup without claiming that infrastructure analytics are disabled", () => {
+  it("documents tracking cleanup and infrastructure-level analytics separately", () => {
     const analyticsText = legalPages.analytics.sections
       .flatMap((section) => section.paragraphs)
       .join(" ");
 
     expect(analyticsText).toContain("fbclid");
-    expect(analyticsText).toContain("Infrastructure analytics").not;
+    expect(analyticsText).toContain("infrastructure level");
+    expect(analyticsText).not.toContain("all analytics are disabled");
   });
 });
