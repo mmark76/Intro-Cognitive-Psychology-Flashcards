@@ -2,10 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import { chapters, flashcards } from "../../data";
 import { studyDatabase } from "../../infrastructure/database/studyDatabase";
 import { createId } from "../../shared/utils/id";
-
-function shuffled<T>(items: T[]): T[] {
-  return [...items].sort(() => Math.random() - 0.5);
-}
+import { buildQuizQuestions } from "./buildQuizQuestions";
 
 export function QuizPage() {
   const [chapter, setChapter] = useState(0);
@@ -20,10 +17,7 @@ export function QuizPage() {
 
   const questions = useMemo(() => {
     const pool = chapter === 0 ? flashcards : flashcards.filter((card) => card.chapterId === `chapter-${chapter.toString().padStart(2, "0")}`);
-    return shuffled(pool).slice(0, Math.min(10, pool.length)).map((card) => {
-      const distractors = shuffled(flashcards.filter((item) => item.id !== card.id)).slice(0, 3).map((item) => item.answer);
-      return { card, options: shuffled([card.answer, ...distractors]) };
-    });
+    return buildQuizQuestions(pool, flashcards);
   }, [chapter, version]);
 
   const current = questions[index];
