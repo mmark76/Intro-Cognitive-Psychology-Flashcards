@@ -44,3 +44,11 @@ Deployment occurs from `main` through the GitHub Pages workflow after verificati
 ## Project rules
 
 Development follows [`GENERAL_SOFTWARE_PROJECT_GUIDE.md`](./GENERAL_SOFTWARE_PROJECT_GUIDE.md): small files, clear responsibilities, feature-based organisation, low coupling, tests and controlled changes.
+
+## Licence
+
+Copyright © 2026 Markellos Markides. All rights reserved.
+
+This project is publicly visible but is **not open source**. No permission is granted to copy, modify, distribute, rehost, sublicense, sell, or otherwise reuse the source code or original content without prior written permission.
+
+See the [`LICENSE`](./LICENSE) file for the complete terms. Third-party dependencies and materials remain subject to their own licences.
