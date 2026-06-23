@@ -1,0 +1,6 @@
+.legal-page { max-width: 860px; margin: 0 auto; }
+.legal-updated { color: var(--slate-500); font-size: 0.9rem; }
+.legal-content { display: grid; gap: 1rem; }
+.legal-section h3 { margin-top: 0; }
+.legal-section p:last-child, .legal-section ul:last-child { margin-bottom: 0; }
+.legal-section ul { padding-left: 1.25rem; }
