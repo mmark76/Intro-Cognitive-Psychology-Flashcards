@@ -8,6 +8,7 @@ const navigation = [
   ["/review", "Επανάληψη"],
   ["/quiz", "Quiz"],
   ["/progress", "Πρόοδος"],
+  ["/study-materials", "Υλικό για μελέτη"],
 ] as const;
 
 export function AppLayout() {
