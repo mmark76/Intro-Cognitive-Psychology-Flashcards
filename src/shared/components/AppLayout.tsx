@@ -11,6 +11,13 @@ const navigation = [
   ["/study-materials", "Υλικό για μελέτη"],
 ] as const;
 
+const footerNavigation = [
+  ["/legal/license", "License"],
+  ["/legal/privacy", "Privacy"],
+  ["/legal/analytics", "Analytics choices"],
+  ["/legal/copyright", "Copyright protected"],
+] as const;
+
 export function AppLayout() {
   return (
     <div className="app-shell">
@@ -33,12 +40,13 @@ export function AppLayout() {
       </main>
       <footer className="app-footer">
         <p>© 2026 Markellos Markides. All rights reserved.</p>
-        <p className="footer-meta" aria-label="Footer information">
-          <span>License</span>
-          <span>Privacy</span>
-          <span>Analytics choices</span>
-          <span>Copyright protected</span>
-        </p>
+        <nav className="footer-meta" aria-label="Legal information">
+          {footerNavigation.map(([to, label]) => (
+            <NavLink key={to} to={to}>
+              {label}
+            </NavLink>
+          ))}
+        </nav>
       </footer>
     </div>
   );
