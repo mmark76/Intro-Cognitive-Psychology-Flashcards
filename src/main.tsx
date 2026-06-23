@@ -6,7 +6,9 @@ import "./shared/styles/tokens.css";
 import "./shared/styles/base.css";
 import "./shared/styles/layout.css";
 import "./shared/styles/components.css";
+import { removeTrackingParametersFromAddressBar } from "./shared/utils/trackingParameters";
 
+removeTrackingParametersFromAddressBar();
 registerSW({ immediate: true });
 
 createRoot(document.getElementById("root")!).render(
